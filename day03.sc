@@ -18,3 +18,6 @@ def test() = {
 test()
 
 println("Result: " + spiralMemory(312051))
+
+
+// Part 2 by manual calculation using Excel: 312453
