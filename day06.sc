@@ -7,8 +7,9 @@ val in = "4\t10\t4\t1\t8\t4\t9\t14\t5\t1\t14\t15\t0\t15\t3\t5"
 
 def redistributionCycles(input: String): Int = {
   val memory = input.split('\t').map(_.toInt)
+  val stack = mutable.Stack[String]()
 
-  cycle(memory, mutable.Stack[String]())
+  cycle(memory, stack)
 }
 
 @tailrec
@@ -34,6 +35,8 @@ def cycle(memory: Array[Int], stack: mutable.Stack[String]): Int = {
   }
 
   if (stack.contains(updatedMemory.mkString(" "))) {
+    println("Result 2: " + stack.indexOf(updatedMemory.mkString(" ")) + 1)
+
     return stack.length + 1
   }
 
@@ -51,4 +54,4 @@ def test1() = {
 
 test1()
 
-println("Result: " + redistributionCycles(in))
+println("Result 1: " + redistributionCycles(in))
