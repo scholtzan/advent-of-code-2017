@@ -9,8 +9,9 @@ def get(map: scala.collection.mutable.Map[String, Int], value: String): Int = {
 }
 
 
-def maxRegister(input: String): Int = {
+def maxRegister(input: String): (Int, Int) = {
   val registers = scala.collection.mutable.Map[String, Int]()
+  var max = 0
 
   input.split('\n').foreach { instruction =>
     val (registerOperation, condition) = instruction.split(" if ") match {
@@ -44,16 +45,20 @@ def maxRegister(input: String): Int = {
         case "dec" => registers(register) -= value
       }
     }
+
+    if (registers.maxBy(_._2)._2 > max) {
+      max = registers.maxBy(_._2)._2
+    }
   }
 
-  registers.maxBy(_._2)._2
+  (registers.maxBy(_._2)._2, max)
 }
 
 
 def test(): Unit = {
   val testInput = "b inc 5 if a > 1\na inc 1 if b < 5\nc dec -10 if a >= 1\nc inc -20 if c == 10"
 
-  assert(maxRegister(testInput) == 1)
+  assert(maxRegister(testInput) == (1, 10))
 }
 
 test()
